@@ -1,113 +1,113 @@
--- Урок 3. Введение в проектирование БД.
+п»ї-- РЈСЂРѕРє 3. Р’РІРµРґРµРЅРёРµ РІ РїСЂРѕРµРєС‚РёСЂРѕРІР°РЅРёРµ Р‘Р”.
 
--- Создание БД для социальной сети ВКонтакте
+-- РЎРѕР·РґР°РЅРёРµ Р‘Р” РґР»СЏ СЃРѕС†РёР°Р»СЊРЅРѕР№ СЃРµС‚Рё Р’РљРѕРЅС‚Р°РєС‚Рµ
 -- https://vk.com/geekbrainsru
 
--- Создаём БД
+-- РЎРѕР·РґР°С‘Рј Р‘Р”
 CREATE DATABASE vk;
 
--- Делаем её текущей
+-- Р”РµР»Р°РµРј РµС‘ С‚РµРєСѓС‰РµР№
 USE vk;
 
--- Создаём таблицу пользователей
+-- РЎРѕР·РґР°С‘Рј С‚Р°Р±Р»РёС†Сѓ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 CREATE TABLE users (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки", 
-  first_name VARCHAR(100) NOT NULL COMMENT "Имя пользователя",
-  last_name VARCHAR(100) NOT NULL COMMENT "Фамилия пользователя",
-  email VARCHAR(100) NOT NULL UNIQUE COMMENT "Почта",
-  phone VARCHAR(100) NOT NULL UNIQUE COMMENT "Телефон",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT "Пользователи";  
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё", 
+  first_name VARCHAR(100) NOT NULL COMMENT "РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+  last_name VARCHAR(100) NOT NULL COMMENT "Р¤Р°РјРёР»РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+  email VARCHAR(100) NOT NULL UNIQUE COMMENT "РџРѕС‡С‚Р°",
+  phone VARCHAR(100) NOT NULL UNIQUE COMMENT "РўРµР»РµС„РѕРЅ",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT "РџРѕР»СЊР·РѕРІР°С‚РµР»Рё";  
 
--- Таблица профилей
+-- РўР°Р±Р»РёС†Р° РїСЂРѕС„РёР»РµР№
 CREATE TABLE profiles (
-  user_id INT UNSIGNED NOT NULL PRIMARY KEY COMMENT "Ссылка на пользователя", 
-  gender CHAR(1) NOT NULL COMMENT "Пол",
-  birthday DATE COMMENT "Дата рождения",
-  photo_id INT UNSIGNED COMMENT "Ссылка на основную фотографию пользователя",
-  city VARCHAR(130) COMMENT "Город проживания",
-  country VARCHAR(130) COMMENT "Страна проживания",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT "Профили"; 
+  user_id INT UNSIGNED NOT NULL PRIMARY KEY COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ", 
+  gender CHAR(1) NOT NULL COMMENT "РџРѕР»",
+  birthday DATE COMMENT "Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ",
+  photo_id INT UNSIGNED COMMENT "РЎСЃС‹Р»РєР° РЅР° РѕСЃРЅРѕРІРЅСѓСЋ С„РѕС‚РѕРіСЂР°С„РёСЋ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+  city VARCHAR(130) COMMENT "Р“РѕСЂРѕРґ РїСЂРѕР¶РёРІР°РЅРёСЏ",
+  country VARCHAR(130) COMMENT "РЎС‚СЂР°РЅР° РїСЂРѕР¶РёРІР°РЅРёСЏ",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT "РџСЂРѕС„РёР»Рё"; 
 
--- Таблица сообщений
+-- РўР°Р±Р»РёС†Р° СЃРѕРѕР±С‰РµРЅРёР№
 CREATE TABLE messages (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки", 
-  from_user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на отправителя сообщения",
-  to_user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на получателя сообщения",
-  body TEXT NOT NULL COMMENT "Текст сообщения",
-  is_important BOOLEAN COMMENT "Признак важности",
-  is_delivered BOOLEAN COMMENT "Признак доставки",
-  created_at DATETIME DEFAULT NOW() COMMENT "Время создания строки",
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT "Сообщения";
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё", 
+  from_user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РѕС‚РїСЂР°РІРёС‚РµР»СЏ СЃРѕРѕР±С‰РµРЅРёСЏ",
+  to_user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СѓС‡Р°С‚РµР»СЏ СЃРѕРѕР±С‰РµРЅРёСЏ",
+  body TEXT NOT NULL COMMENT "РўРµРєСЃС‚ СЃРѕРѕР±С‰РµРЅРёСЏ",
+  is_important BOOLEAN COMMENT "РџСЂРёР·РЅР°Рє РІР°Р¶РЅРѕСЃС‚Рё",
+  is_delivered BOOLEAN COMMENT "РџСЂРёР·РЅР°Рє РґРѕСЃС‚Р°РІРєРё",
+  created_at DATETIME DEFAULT NOW() COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT "РЎРѕРѕР±С‰РµРЅРёСЏ";
 
--- Таблица дружбы
+-- РўР°Р±Р»РёС†Р° РґСЂСѓР¶Р±С‹
 CREATE TABLE friendship (
-  user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на инициатора дружеских отношений",
-  friend_id INT UNSIGNED NOT NULL COMMENT "Ссылка на получателя приглашения дружить",
-  status_id INT UNSIGNED NOT NULL COMMENT "Ссылка на статус (текущее состояние) отношений",
-  requested_at DATETIME DEFAULT NOW() COMMENT "Время отправления приглашения дружить",
-  confirmed_at DATETIME COMMENT "Время подтверждения приглашения",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки",  
-  PRIMARY KEY (user_id, friend_id) COMMENT "Составной первичный ключ"
-) COMMENT "Таблица дружбы";
+  user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РёРЅРёС†РёР°С‚РѕСЂР° РґСЂСѓР¶РµСЃРєРёС… РѕС‚РЅРѕС€РµРЅРёР№",
+  friend_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СѓС‡Р°С‚РµР»СЏ РїСЂРёРіР»Р°С€РµРЅРёСЏ РґСЂСѓР¶РёС‚СЊ",
+  status_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° СЃС‚Р°С‚СѓСЃ (С‚РµРєСѓС‰РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ) РѕС‚РЅРѕС€РµРЅРёР№",
+  requested_at DATETIME DEFAULT NOW() COMMENT "Р’СЂРµРјСЏ РѕС‚РїСЂР°РІР»РµРЅРёСЏ РїСЂРёРіР»Р°С€РµРЅРёСЏ РґСЂСѓР¶РёС‚СЊ",
+  confirmed_at DATETIME COMMENT "Р’СЂРµРјСЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ РїСЂРёРіР»Р°С€РµРЅРёСЏ",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё",  
+  PRIMARY KEY (user_id, friend_id) COMMENT "РЎРѕСЃС‚Р°РІРЅРѕР№ РїРµСЂРІРёС‡РЅС‹Р№ РєР»СЋС‡"
+) COMMENT "РўР°Р±Р»РёС†Р° РґСЂСѓР¶Р±С‹";
 
--- Таблица статусов дружеских отношений
+-- РўР°Р±Р»РёС†Р° СЃС‚Р°С‚СѓСЃРѕРІ РґСЂСѓР¶РµСЃРєРёС… РѕС‚РЅРѕС€РµРЅРёР№
 CREATE TABLE friendship_statuses (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки",
-  name VARCHAR(150) NOT NULL UNIQUE COMMENT "Название статуса",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"  
-) COMMENT "Статусы дружбы";
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё",
+  name VARCHAR(150) NOT NULL UNIQUE COMMENT "РќР°Р·РІР°РЅРёРµ СЃС‚Р°С‚СѓСЃР°",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"  
+) COMMENT "РЎС‚Р°С‚СѓСЃС‹ РґСЂСѓР¶Р±С‹";
 
--- Таблица групп
+-- РўР°Р±Р»РёС†Р° РіСЂСѓРїРї
 CREATE TABLE communities (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор сроки",
-  name VARCHAR(150) NOT NULL UNIQUE COMMENT "Название группы",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"  
-) COMMENT "Группы";
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃСЂРѕРєРё",
+  name VARCHAR(150) NOT NULL UNIQUE COMMENT "РќР°Р·РІР°РЅРёРµ РіСЂСѓРїРїС‹",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"  
+) COMMENT "Р“СЂСѓРїРїС‹";
 
--- Таблица связи пользователей и групп
+-- РўР°Р±Р»РёС†Р° СЃРІСЏР·Рё РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ Рё РіСЂСѓРїРї
 CREATE TABLE communities_users (
-  community_id INT UNSIGNED NOT NULL COMMENT "Ссылка на группу",
-  user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на пользователя",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки", 
-  PRIMARY KEY (community_id, user_id) COMMENT "Составной первичный ключ"
-) COMMENT "Участники групп, связь между пользователями и группами";
+  community_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РіСЂСѓРїРїСѓ",
+  user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё", 
+  PRIMARY KEY (community_id, user_id) COMMENT "РЎРѕСЃС‚Р°РІРЅРѕР№ РїРµСЂРІРёС‡РЅС‹Р№ РєР»СЋС‡"
+) COMMENT "РЈС‡Р°СЃС‚РЅРёРєРё РіСЂСѓРїРї, СЃРІСЏР·СЊ РјРµР¶РґСѓ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏРјРё Рё РіСЂСѓРїРїР°РјРё";
 
--- Таблица медиафайлов
+-- РўР°Р±Р»РёС†Р° РјРµРґРёР°С„Р°Р№Р»РѕРІ
 CREATE TABLE media (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки",
-  user_id INT UNSIGNED NOT NULL COMMENT "Ссылка на пользователя, который загрузил файл",
-  filename VARCHAR(255) NOT NULL COMMENT "Путь к файлу",
-  size INT NOT NULL COMMENT "Размер файла",
-  metadata JSON COMMENT "Метаданные файла",
-  media_type_id INT UNSIGNED NOT NULL COMMENT "Ссылка на тип контента",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT "Медиафайлы";
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё",
+  user_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РєРѕС‚РѕСЂС‹Р№ Р·Р°РіСЂСѓР·РёР» С„Р°Р№Р»",
+  filename VARCHAR(255) NOT NULL COMMENT "РџСѓС‚СЊ Рє С„Р°Р№Р»Сѓ",
+  size INT NOT NULL COMMENT "Р Р°Р·РјРµСЂ С„Р°Р№Р»Р°",
+  metadata JSON COMMENT "РњРµС‚Р°РґР°РЅРЅС‹Рµ С„Р°Р№Р»Р°",
+  media_type_id INT UNSIGNED NOT NULL COMMENT "РЎСЃС‹Р»РєР° РЅР° С‚РёРї РєРѕРЅС‚РµРЅС‚Р°",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT "РњРµРґРёР°С„Р°Р№Р»С‹";
 
--- Таблица типов медиафайлов
+-- РўР°Р±Р»РёС†Р° С‚РёРїРѕРІ РјРµРґРёР°С„Р°Р№Р»РѕРІ
 CREATE TABLE media_types (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "Идентификатор строки",
-  name VARCHAR(255) NOT NULL UNIQUE COMMENT "Название типа",
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Время создания строки",  
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Время обновления строки"
-) COMMENT "Типы медиафайлов";
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃС‚СЂРѕРєРё",
+  name VARCHAR(255) NOT NULL UNIQUE COMMENT "РќР°Р·РІР°РЅРёРµ С‚РёРїР°",
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ СЃРѕР·РґР°РЅРёСЏ СЃС‚СЂРѕРєРё",  
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT "Р’СЂРµРјСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚СЂРѕРєРё"
+) COMMENT "РўРёРїС‹ РјРµРґРёР°С„Р°Р№Р»РѕРІ";
 
 
--- Рекомендуемый стиль написания кода SQL
+-- Р РµРєРѕРјРµРЅРґСѓРµРјС‹Р№ СЃС‚РёР»СЊ РЅР°РїРёСЃР°РЅРёСЏ РєРѕРґР° SQL
 -- https://www.sqlstyle.guide/ru/
 
--- Заполняем таблицы с учётом отношений 
--- на http://filldb.info
+-- Р—Р°РїРѕР»РЅСЏРµРј С‚Р°Р±Р»РёС†С‹ СЃ СѓС‡С‘С‚РѕРј РѕС‚РЅРѕС€РµРЅРёР№ 
+-- РЅР° http://filldb.info
 
--- Документация
+-- Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ
 -- https://dev.mysql.com/doc/refman/8.0/en/
 -- http://www.rldp.ru/mysql/mysql80/index.htm
 

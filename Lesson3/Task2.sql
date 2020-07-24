@@ -1,4 +1,4 @@
--- Generation time: Thu, 23 Jul 2020 13:30:11 +0000
+﻿-- Generation time: Thu, 23 Jul 2020 13:30:11 +0000
 -- Host: mysql.hostinger.ro
 -- DB name: u574849695_24
 /*!40030 SET NAMES UTF8 */;
