@@ -26,10 +26,38 @@ SELECT * FROM users LIMIT 10;
 --    Однако нулевые запасы должны выводиться в конце, после всех записей.
 
 INSERT INTO storehouses_products (`value`) VALUES (1), (100), (0), (4), (3), (20);
-SELECT * FROM storehouses_products ORDER BY Value;
+SELECT * FROM storehouses_products ORDER BY Value = 0, Value;
 
 
 -- 4. Из таблицы users необходимо извлечь пользователей, родившихся в августе и мае. Месяцы заданы в виде списка английских названий (may, august)
 
+ALTER TABLE users ADD COLUMN birthday_month varchar(10) DEFAULT 'january' COMMENT 'Месяц рождения';
+DESC users;
+SELECT * FROM users LIMIT 10;
+UPDATE users u SET  u.birthday_month = 'may' WHERE u.id IN (3,8,15,20);
+UPDATE users u SET  u.birthday_month = 'august' WHERE u.id IN (5,9,18,24);
+
+SELECT * FROM users u WHERE u.birthday_month IN ('may', 'august');
+
+SELECT *  FROM profiles p  WHERE DATE_FORMAT(p.birthday, '%M') IN ('may', 'august');
+
 -- 5. Из таблицы catalogs извлекаются записи при помощи запроса. SELECT * FROM catalogs WHERE id IN (5, 1, 2); Отсортируйте записи в порядке, заданном в списке IN.
 
+DROP TABLE IF EXISTS catalogs;
+CREATE TABLE catalogs (
+  id SERIAL PRIMARY KEY,
+  name varchar(255),  
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) COMMENT = 'Каталог товаров';
+
+INSERT INTO catalogs (`name`) VALUES
+  ('Процессоры'),
+  ('Материнские платы'),
+  ('Видеокарты'),
+  ('Жесткие диски'),
+  ('Оперативная память');
+
+SELECT * FROM catalogs c LIMIT 10;
+
+SELECT * FROM catalogs WHERE id IN (5, 1, 2) ORDER BY FIELD(id, 5, 1, 2);
