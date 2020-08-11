@@ -4,21 +4,25 @@
 
 -- выводим таблицу для наглядности
 SELECT
+  u.id,
   CONCAT(u.first_name, ' ', u.last_name) AS username,
   p.birthday,
   p.gender,
   p.city,
   p.country,
+  --   l.id lid,
+  --   l.target_id,
+  --   l.target_type_id
   COUNT(l.id) AS count
 FROM users u
   JOIN profiles p
     ON u.id = p.user_id
   LEFT JOIN likes l
     ON l.target_id = u.id
-  LEFT JOIN target_types tt
-    ON l.target_type_id = tt.id
-WHERE tt.name = 'users'
-OR tt.name IS NULL
+    AND l.target_type_id = (SELECT
+        tt.id
+      FROM target_types tt
+      WHERE tt.name = 'users' LIMIT 1)
 GROUP BY u.id
 ORDER BY p.birthday DESC
 LIMIT 10;
@@ -31,10 +35,10 @@ FROM users u
     ON u.id = p.user_id
   LEFT JOIN likes l
     ON l.target_id = u.id
-  LEFT JOIN target_types tt
-    ON l.target_type_id = tt.id
-WHERE tt.name = 'users'
-OR tt.name IS NULL
+    AND l.target_type_id = (SELECT
+        tt.id
+      FROM target_types tt
+      WHERE tt.name = 'users' LIMIT 1)
 GROUP BY u.id
 ORDER BY p.birthday DESC
 LIMIT 10;
@@ -49,10 +53,10 @@ FROM (SELECT
       ON u.id = p.user_id
     LEFT JOIN likes l
       ON l.target_id = u.id
-    LEFT JOIN target_types tt
-      ON l.target_type_id = tt.id
-  WHERE tt.name = 'users'
-  OR tt.name IS NULL
+      AND l.target_type_id = (SELECT
+          tt.id
+        FROM target_types tt
+        WHERE tt.name = 'users' LIMIT 1)
   GROUP BY u.id
   ORDER BY p.birthday DESC
   LIMIT 10) r;
@@ -79,14 +83,6 @@ SELECT
       WHERE tt.name = 'users' LIMIT 1)) AS count
 FROM profiles p
 ORDER BY p.birthday DESC LIMIT 10;
-
-SELECT
-  *
-FROM likes l
-WHERE l.id IN (15, 51);
-SELECT
-  *
-FROM target_types tt;
 
 -- оставляем только данные по лайкам
 SELECT
