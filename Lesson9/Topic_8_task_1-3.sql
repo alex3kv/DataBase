@@ -44,7 +44,7 @@ BEFORE INSERT
 ON products FOR EACH ROW
 BEGIN
   IF NEW.name IS NULL AND NEW.desription IS NULL THEN
-    SIGNAL SQLSTATE '45000';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Поля name и desription одновремнно не могут быть null';
   END IF;
 END
 $$
@@ -59,7 +59,7 @@ BEFORE UPDATE
 ON products FOR EACH ROW
 BEGIN
   IF NEW.name IS NULL AND NEW.desription IS NULL THEN
-    SIGNAL SQLSTATE '45000';
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Поля name и desription одновремнно не могут быть null';
   END IF;
 END
 $$
