@@ -31,3 +31,16 @@ AS
 
 
 -- 4. (по желанию) Пусть имеется любая таблица с календарным полем created_at. Создайте запрос, который удаляет устаревшие записи из таблицы, оставляя только 5 самых свежих записей.
+
+START TRANSACTION;
+
+SELECT * FROM orders o ORDER BY o.created_at DESC LIMIT 5;
+
+CREATE TEMPORARY TABLE temp (id int);
+INSERT INTO temp SELECT Id FROM orders o ORDER BY o.created_at DESC LIMIT 5;
+
+SELECT * FROM temp t;
+
+DELETE FROM orders WHERE id NOT IN (SELECT Id FROM temp);
+
+COMMIT;
