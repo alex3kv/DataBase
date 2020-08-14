@@ -43,7 +43,8 @@ CREATE TRIGGER products_insert
 BEFORE INSERT
 ON products FOR EACH ROW
 BEGIN
-  IF NEW.name IS NULL AND NEW.desription IS NULL THEN
+  IF NEW.name IS NULL
+    AND NEW.desription IS NULL THEN
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Поля name и desription одновремнно не могут быть null';
   END IF;
 END
@@ -58,7 +59,8 @@ CREATE TRIGGER products_update
 BEFORE UPDATE
 ON products FOR EACH ROW
 BEGIN
-  IF NEW.name IS NULL AND NEW.desription IS NULL THEN
+  IF NEW.name IS NULL
+    AND NEW.desription IS NULL THEN
     SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Поля name и desription одновремнно не могут быть null';
   END IF;
 END
@@ -71,3 +73,36 @@ INSERT INTO products (name, desription, price, catalog_id, created_at, updated_a
 
 -- 3. (по желанию) Напишите хранимую функцию для вычисления произвольного числа Фибоначчи. Числами Фибоначчи называется последовательность в которой число 
 -- равно сумме двух предыдущих чисел. Вызов функции FIBONACCI(10) должен возвращать число 55.
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS FIBONACCI$$
+CREATE FUNCTION FIBONACCI (num int)
+RETURNS int
+DETERMINISTIC
+BEGIN
+
+  DECLARE old,
+          result int DEFAULT 1;
+
+  DECLARE i,
+          fib_sum int DEFAULT 0;
+
+  WHILE i < num - 2 DO
+
+    SET i = i + 1;
+    SET fib_sum = old + result;
+    SET old = result;
+    SET result = fib_sum;
+
+  END WHILE;
+
+  RETURN result;
+END
+$$
+
+DELIMITER ;
+
+
+SELECT
+  FIBONACCI(10);
