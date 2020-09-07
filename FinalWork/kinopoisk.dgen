@@ -4,7 +4,7 @@
 <DataGenDocument Version="6.1">
   <ConnectionModel>
     <PropertyValue Name="Database">59f90733-4d68-4fdf-82a7-f0fcbf5460aa</PropertyValue>
-    <PropertyValue Name="ConnectionString" xml:space="preserve">User Id=alex;Host=172.24.124.92;Character Set=utf8</PropertyValue>
+    <PropertyValue Name="ConnectionString" xml:space="preserve">User Id=alex;Host=172.20.243.211;Character Set=utf8</PropertyValue>
     <PropertyValue Name="ExecutionTimeout">0</PropertyValue>
   </ConnectionModel>
   <Settings>
@@ -677,7 +677,7 @@
           <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
-            <Unique>false</Unique>
+            <Unique>true</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
@@ -698,7 +698,7 @@
           <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
-            <Unique>false</Unique>
+            <Unique>true</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
@@ -852,7 +852,7 @@
         <RowsToGenerate>0</RowsToGenerate>
         <PopulationDetails>
           <PopulationType>RowsCount</PopulationType>
-          <RowsCount>150</RowsCount>
+          <RowsCount>100</RowsCount>
           <LookupProportion>30</LookupProportion>
           <ProportionOfExistingData>10</ProportionOfExistingData>
           <TimeTicksToPopulate>100000000</TimeTicksToPopulate>
@@ -1363,7 +1363,7 @@
           <Checked>true</Checked>
           <DataType>INT</DataType>
           <GeneratorOptions p6:type="ForeignKeyGeneratorOptions" xmlns:p6="http://www.w3.org/2001/XMLSchema-instance">
-            <Unique>false</Unique>
+            <Unique>true</Unique>
             <IsAlwaysUnique>false</IsAlwaysUnique>
             <AllowNulls>false</AllowNulls>
             <NullProportion>0</NullProportion>
